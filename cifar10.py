@@ -177,17 +177,22 @@ import wandb
 from pytorch_lightning.loggers import WandbLogger
 wandb_logger = WandbLogger(project = '2018125041_이명진_CIFAR10')
 
+#callbacks
 
 from pytorch_lightning.callbacks import LearningRateMonitor
 from pytorch_lightning.callbacks.progress import TQDMProgressBar
+
+
+#Train
 
 trainer = pl.Trainer(
     logger = wandb_logger,
     accelerator = "gpu",
     devices = 2,
-    max_epochs = 20,
+    max_epochs = 15,
     strategy = 'dp',
     callbacks=[LearningRateMonitor(logging_interval="step"), TQDMProgressBar(refresh_rate=10)],)
+
 
 trainer.fit(model, datamodule=cifar10)
 trainer.test(model, datamodule=cifar10)
